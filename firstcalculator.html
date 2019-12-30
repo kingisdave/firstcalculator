@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scientific Calculator</title>
+	<link rel="stylesheet" type="text/css" href="calculator.css">
+	<style>
+
+	</style>
+</head>
+<body onload="loader()">
+	<table border="2" id="tab" border-spacing="30px">
+		<tr >
+			<th colspan="10" rowspan="2" bgcolor="white" padding=50px id="scr"></th>
+		</tr>
+		<tr></tr>
+		<tr>
+			<td colspan="5"><input type="radio" name="method">Degree<input type="radio" name="method">Radians<input type="radio" name="method">Grads</td>
+			<td><button>MC</button></td>
+			<td><button>MR</button></td>
+			<td><button>MS</button></td>
+			<td><button>M+</button></td>
+			<td><button>M-</button></td>
+		</tr>
+		<tr>
+			<td id="on" style="display: block;"><button onclick="switcher1()">ON</button></td>
+			<td id="off" style="display: none;"><button onclick="switcher2()">OFF</button></td>
+			<td><button onclick="operates('time')">time</button></td>
+			<td><button onclick="operates('π')">π</button></td>
+			<td><button onclick="butn('(')">(</button></td>
+			<td><button onclick="butn(')')">)</button></td>
+			<td><button onclick="operates('DEL')">DEL</button></td>
+			<td><button onclick="operates('CE')">CE</button></td>
+			<td><button onclick="operates('C')">C</button></td>
+			<td><button onclick="operates('±')">±</button></td>
+			<td><button onclick="operates('√')">√</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="operates('asin')">asin</button></td>
+			<td><button onclick="operates('sinh')">sinh</button></td>
+			<td><button onclick="operates('sin')">sin</button></td>
+			<td><button onclick="operates('x^2')">x<sup>2</sup></button></td>
+			<td><button onclick="operates('n!')">n!</button></td>
+			<td><button onclick="butn(7)">7</button></td>
+			<td><button onclick="butn(8)">8</button></td>
+			<td><button onclick="butn(9)">9</button></td>
+			<td><button onclick="operators('+')">+</button></td>
+			<td><button onclick="operates('%')">%</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="operates('acos')">acos</button></td>
+			<td><button onclick="operates('cosh')">cosh</button></td>
+			<td><button onclick="operates('cos')">cos</button></td>
+			<td><button onclick="operates('x^y')">x<sup>y</sup></button></td>
+			<td><button onclick="operates('∛x')">∛x</button></td>
+			<td><button onclick="butn(4)">4</button></td>
+			<td><button onclick="butn(5)">5</button></td>
+			<td><button onclick="butn(6)">6</button></td>
+			<td><button onclick="operators('-')">-</button></td>
+			<td><button onclick="butn('')">1/x</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="operates('atan')">atan</button></td>
+			<td><button onclick="operates('tanh')">tanh</button></td>
+			<td><button onclick="operates('tan')">tan</button></td>
+			<td><button onclick="operates('x^3')">x<sup>3</sup></button></td>
+			<td><button onclick="operates('10^x')">10<sup>x</sup></button></td>
+			<td><button onclick="butn(1)">1</button></td>
+			<td><button onclick="butn(2)">2</button></td>
+			<td><button onclick="butn(3)">3</button></td>
+			<td><button onclick="operators('*')">X</button></td>
+			<td rowspan="2"><button onclick="equation()" id="eqn">=</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="operates('LN2')">LN2</button></td>
+			<td><button onclick="operates('exp')">Exp</button></td>
+			<td><button onclick="operates('Int')">Int</button></td>
+			<td><button onclick="operates('log')">log</button></td>
+			<td><button onclick="operates('rnd')">RND</button></td>
+			<td colspan="2"><button onclick="butn(0)">0</button></td>
+			<td><button onclick="butn('.')">.</button></td>
+			<td><button onclick="operators('/')">/</button></td>
+		</tr>
+		
+	</table>
+	<script type="text/javascript">
+		var state = false;
+		var fval, ope, o; 
+		var q = document.querySelector('#eqn');
+		var days, months, tim, day, month, year, hrs, min, sec;
+
+		loader=()=>{
+			if (state == false) {
+				days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+				months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+				tim = new Date();
+				day = tim.getDate();
+				month = months[tim.getMonth()];
+				year = tim.getYear();
+				sec = tim.getSeconds();
+				if (sec < 10) {
+					sec = "0" + sec;
+				}
+				min = tim.getMinutes();
+				if (min < 10) {
+					min = "0" + min;
+				}
+				hrs = tim.getHours();
+				if (hrs>12) {
+					if (hrs< 19) {
+						hrs = hrs - 12;
+						scr.innerHTML = "Good Day, Time is:  " +hrs +" : "+min+" : "+sec+ " PM";
+					}
+					else if (hrs>19) {
+						hrs = hrs -12;
+					 	scr.innerHTML = "Good Evening, Time is:  " +hrs +" : "+min+" : "+sec +" PM";
+					} 
+				} 
+				else{
+					scr.innerHTML = "Good Morning, Time is:  " + hrs +" : "+min+" : "+sec+ " AM";
+				}
+
+					
+				setTimeout(loader, 1000);
+			}
+		}
+
+
+		function switcher2(){
+		
+			if (state){
+				scr.innerHTML = "";
+				document.getElementById('on').style.display = "block";
+				document.getElementById('off').style.display = "none";
+				state = false;
+			}
+		}
+		function switcher1(){
+			 if(state = true){
+				scr.innerHTML = "0";
+				state = true;
+				document.getElementById('off').style.display = "block";
+				document.getElementById('on').style.display = "none";
+			}
+
+		}
+
+		function butn(v) {
+			if (state) {
+				if (scr.innerHTML == '0') {
+					scr.innerHTML = v;
+				}
+				else{
+				scr.innerHTML += v;
+				}
+			}
+		}
+		function operators(u) {
+			fval = parseFloat(scr.innerHTML);
+			scr.innerHTML = "";
+			ope = u;
+			
+		}
+		q.onclick = function () {
+			sVal = parseFloat(scr.innerHTML);
+			if (ope == '+') {
+			result = fval + sVal;
+			}
+			else if (ope == '-') {
+			result = fval - sVal;
+			}
+			else if (ope == '/') {
+			result = fval / sVal;
+			}
+			else if (ope == '*') {
+			result = fval * sVal;
+			}
+			
+			scr.innerHTML = result;
+			
+		}
+
+		function operates(y) {
+			if (state) {
+				var t = new Date();
+				
+				
+				fval = parseFloat(scr.innerHTML);
+				ope = y;
+				if (ope == "π") {
+				scr.innerHTML = (fval * Math.PI);
+				}
+				else if (ope == "cos") {
+				scr.innerHTML = Math.cos(fval)
+				}
+				else if (ope == "sin") {
+				scr.innerHTML = Math.sin(fval);
+				}
+				else if (ope == "tan") {
+				scr.innerHTML = Math.tan(fval);
+				}
+				else if (ope == "√") {
+				scr.innerHTML = Math.sqrt(fval);
+				}
+				else if (ope == "cosh") {
+				scr.innerHTML = Math.cosh(fval)
+				}
+				else if (ope == "sinh") {
+				scr.innerHTML = Math.sinh(fval);
+				}
+				else if (ope == "tanh") {
+				scr.innerHTML = Math.tanh(fval);
+				}
+				else if (ope == "acos") {
+				scr.innerHTML = Math.acos(fval)
+				}
+				else if (ope == "asin") {
+				scr.innerHTML = Math.asin(fval);
+				}
+				else if (ope == "atan") {
+				scr.innerHTML = Math.atan(fval);
+				}
+				else if (ope == "log") {
+				scr.innerHTML = Math.log(fval);
+				}
+				else if (ope == "Int") {
+				scr.innerHTML = Math.floor(fval);
+				}
+				else if (ope == "DEL") {
+				scr.innerHTML = "";
+				}
+				else if (ope == "CE") {
+				scr.innerHTML = scr.innerHTML.slice(0,-1);
+				}
+				else if (ope == "exp") {
+				scr.innerHTML = Math.exp(fval);
+				}
+				else if (ope == "rnd") {
+				scr.innerHTML = Math.random();
+				}
+				else if (ope == "10^x") {
+				scr.innerHTML = Math.pow(10, scr.innerHTML);
+				}
+				else if (ope == "x^y") {
+				scr.innerHTML = Math.pow(fval, scr.innerHTML);
+				}
+				else if (ope == "x^3") {
+				scr.innerHTML = Math.pow(fval, 3);
+				}
+				else if (ope == "x^2") {
+			 	scr.innerHTML = Math.pow(fval, 2);
+				}
+				else if (ope == "∛x") {
+				scr.innerHTML = Math.cbrt(fval);
+				}
+			 	else if (ope == "time") {
+				scr.innerHTML = scr.innerHTML = t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds();
+				setTimeout(operates, 1000);
+				}
+				
+			}
+		} 
+
+	</script>
+</body>
+</html>

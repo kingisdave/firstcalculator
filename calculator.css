@@ -1,0 +1,17 @@
+button{
+	background-color: lightskyblue;
+	width: 100%;
+	height: 100%;
+}
+#tab{
+	width: 40%;
+	background-color: LightCyan;
+	height: 40px;
+}
+#scr{
+	height: 40px;
+	font-size: 20px;
+	text-align: right;
+	/*visibility: hidden;*/
+	border-style: solid;
+}
